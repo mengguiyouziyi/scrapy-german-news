@@ -11,6 +11,7 @@ from crawler.utils import get_first
 
 class ZeitSpider(CrawlSpider):
     name = 'zeit'
+    rotate_user_agent = True
     allowed_domains = ['www.zeit.de']
     start_urls = ['http://www.zeit.de/index']
     rules = (
