@@ -39,7 +39,7 @@ class SpiegelSpider(CrawlSpider):
         item['title'] = get_first(response.selector.css('.headline').xpath('./text()').extract())
         item['description'] = get_first(response.selector.xpath('//meta[@name="description"]/@content').extract())
         item['text'] = "".join([s.strip().encode('utf-8') for s in response.selector.xpath('//div[@class="article-section clearfix"]/p/text()').extract()])
-        item['author'] = get_first(response.selector.xpath('//p[@class="author"]/a/text()').extract())
+        item['author'] = [s.encode('utf-8') for s in response.selector.xpath('//p[@class="author"]/a/text()').extract()]
         item['keywords'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="news_keywords"]/@content').extract()]
         item['article_type'] = get_first(response.selector.xpath('//meta[@property="og:type"]/@content').extract())
         return item

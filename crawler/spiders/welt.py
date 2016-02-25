@@ -17,7 +17,8 @@ class WeltSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)(^.+)',),
+                allow=('(politik|wirtschaft)',),
+                deny=('\.html')
             ),
             follow=True
         ),
@@ -37,7 +38,7 @@ class WeltSpider(CrawlSpider):
         item['title'] = get_first(response.selector.xpath('//meta[@property="og:title"]/@content').extract())
         item['description'] = get_first(response.selector.xpath('//meta[@name="description"]/@content').extract())
         item['text'] = "".join([s.strip().encode('utf-8') for s in response.selector.css('.artContent').xpath('.//text()').extract()])
-        item['author'] = get_first(response.selector.xpath('.//meta[@name="author"]/@content').extract())
+        item['author'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="author"]/@content').extract()]
         item['keywords'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="keywords"]/@content').extract()]
         item['article_type'] = get_first(response.selector.xpath('//meta[@property="og:type"]/@content').extract())
         return item

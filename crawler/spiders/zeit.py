@@ -17,7 +17,7 @@ class ZeitSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|gesellschaft|wirtschaft)(\/\w+)*\/index',),
+                allow=('(politik|gesellschaft|wirtschaft).*\/index',),
             ),
             follow=True
         ),
