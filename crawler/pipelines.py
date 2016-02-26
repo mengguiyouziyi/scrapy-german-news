@@ -9,8 +9,6 @@ import psycopg2
 
 class PostgresPipeline(object):
 
-    collection_name = 'scrapy_items'
-
     def __init__(self, db_name, db_user, db_host, db_port, db_password):
         try: 
             self.db = psycopg2.connect("dbname="+db_name+" user="+db_user+" host="+db_host+" port="+db_port+" password="+db_password)
@@ -35,7 +33,7 @@ class PostgresPipeline(object):
     def open_spider(self, spider):
         self.tbl_name = spider.name
         self.cursor.execute(
-            "CREATE TABLE IF NOT EXISTS "+self.tbl_name+" (url text, visited timestamp, published timestamp, title text, description text, text text, author text[], keywords text[], article_type text);")
+            "CREATE TABLE IF NOT EXISTS "+self.tbl_name+" (url text PRIMARY KEY, visited timestamp, published timestamp, title text, description text, text text, author text[], keywords text[], article_type text);")
 
     def close_spider(self, spider):
         self.db.commit()
@@ -43,8 +41,12 @@ class PostgresPipeline(object):
 
     def process_item(self, item, spider):
         try:
+            # Needs postgresql version >= 9.5 for UPSERT, else remove "ON CONFLICT ..." line and handle duplicates
             self.cursor.execute(
-                "INSERT INTO "+self.tbl_name+" VALUES (%s, %s, %s ,%s ,%s, %s, %s, %s, %s )",(
+                "INSERT INTO "+self.tbl_name+" "+
+                    "VALUES (%s, %s, %s ,%s ,%s, %s, %s, %s, %s ) "+
+                    "ON CONFLICT DO NOTHING ;"
+                    ,(
                     item['url'],
                     item['visited'],
                     item['published'],
