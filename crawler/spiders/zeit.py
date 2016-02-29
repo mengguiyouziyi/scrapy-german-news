@@ -17,15 +17,19 @@ class ZeitSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|gesellschaft|wirtschaft).*\/index',),
+                allow=(
+                    '(politik|gesellschaft|wirtschaft).*\/index',
+                    'thema\/'
+                )
             ),
             follow=True
         ),
         Rule(
             LinkExtractor(
-                allow=('(politik|gesellschaft|wirtschaft)(\/\w+)*\/\d{4}-\d{1,2}\/\w+'),
-                deny=('\w+-fs')
+                allow=('(politik|gesellschaft|wirtschaft)(\/.+)*\/\d{4}-\d{1,2}\/.+'),
+                deny=('-fs')
             ),
+            # Catch additional pages 
             callback='parse_page',
         ),
     )
@@ -43,5 +47,6 @@ class ZeitSpider(CrawlSpider):
         item['article_type'] = get_first(response.selector.xpath('//meta[@property="og:type"]/@content').extract())
         next_page = get_first(response.selector.xpath('//link[@rel="next"]/@href').extract())
         if next_page:
-            Request(next_page,callback=self.parse_page)
-        return item
+            self.logger.debug("Next page found: "+next_page)
+            yield Request(next_page,callback=self.parse_page)
+        yield item
