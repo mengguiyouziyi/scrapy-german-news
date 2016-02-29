@@ -75,6 +75,7 @@ USER_AGENT_CHOICES = [
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'crawler.pipelines.PostgresPipeline': 300,
+    # 'crawler.pipelines.JsonWriterPipeline': 800,
 }
 
 DATABASE = {

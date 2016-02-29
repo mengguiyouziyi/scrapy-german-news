@@ -6,9 +6,18 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import psycopg2
+import json
+
+class JsonWriterPipeline(object):
+    def __init__(self):
+        self.file = open('items.jl', 'wb')
+
+    def process_item(self, item, spider):
+        line = json.dumps(dict(item)) + "\n"
+        self.file.write(line)
+        return item
 
 class PostgresPipeline(object):
-
     def __init__(self, db_name, db_user, db_host, db_port, db_password):
         try: 
             self.db = psycopg2.connect("dbname="+db_name+" user="+db_user+" host="+db_host+" port="+db_port+" password="+db_password)
