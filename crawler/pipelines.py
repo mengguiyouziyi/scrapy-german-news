@@ -33,7 +33,7 @@ class PostgresPipeline(object):
     def open_spider(self, spider):
         self.tbl_name = spider.name
         self.cursor.execute(
-            "CREATE TABLE IF NOT EXISTS "+self.tbl_name+" (url text PRIMARY KEY, visited timestamp, published timestamp, title text, description text, text text, author text[], keywords text[], article_type text);")
+            "CREATE TABLE IF NOT EXISTS "+self.tbl_name+" (url text PRIMARY KEY, visited timestamp, published timestamp, title text, description text, text text, author text[], keywords text[]);")
 
     def close_spider(self, spider):
         self.db.commit()
@@ -44,7 +44,7 @@ class PostgresPipeline(object):
             # Needs postgresql version >= 9.5 for UPSERT, else remove "ON CONFLICT ..." line and handle duplicates
             self.cursor.execute(
                 "INSERT INTO "+self.tbl_name+" "+
-                    "VALUES (%s, %s, %s ,%s ,%s, %s, %s, %s, %s ) "+
+                    "VALUES (%s, %s, %s ,%s ,%s, %s, %s, %s) "+
                     "ON CONFLICT DO NOTHING ;"
                     ,(
                     item['url'],
@@ -55,7 +55,6 @@ class PostgresPipeline(object):
                     item['text'],
                     item['author'],
                     item['keywords'],
-                    item['article_type'],
                 )
             )
         except psycopg2.DatabaseError as e:

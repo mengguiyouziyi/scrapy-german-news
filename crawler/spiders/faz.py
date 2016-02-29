@@ -39,5 +39,4 @@ class FazSpider(CrawlSpider):
         item['text'] = "".join([s.strip().encode('utf-8') for s in response.selector.xpath('//div[@class="FAZArtikelText"]/div[3]/p/text()').extract()])
         item['author'] = [s.encode('utf-8') for s in response.selector.xpath('//span[@class="Autor"]/span[@class="caps last"]/a/span[@class="caps last"]/text()').extract()]
         item['keywords'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="keywords"]/@content').extract()]
-        item['article_type'] = get_first(response.selector.xpath('//meta[@property="og:type"]/@content').extract())
         return item

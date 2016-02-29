@@ -44,7 +44,6 @@ class ZeitSpider(CrawlSpider):
         item['text'] = "".join([s.strip().encode('utf-8') for s in response.selector.css('.article__item').css('.paragraph').xpath('.//text()').extract()])
         item['author'] = [s.encode('utf-8') for s in response.selector.css('.byline').css('span[itemprop="name"]').xpath('./text()').extract()]
         item['keywords'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="keywords"]/@content').extract()]
-        item['article_type'] = get_first(response.selector.xpath('//meta[@property="og:type"]/@content').extract())
         next_page = get_first(response.selector.xpath('//link[@rel="next"]/@href').extract())
         if next_page:
             self.logger.debug("Next page found: "+next_page)
