@@ -13,18 +13,21 @@ class SZSpider(CrawlSpider):
     name = 'sz'
     rotate_user_agent = True
     allowed_domains = ['www.sueddeutsche.de']
-    start_urls = ['http://www.sueddeutsche.de']
+    start_urls = [
+            'http://www.sueddeutsche.de',
+            'http://www.sueddeutsche.de/thema',
+    ]
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)',),
-                deny=('\.\d+')
+                allow=('(politik|wirtschaft|panorama|thema)\/.+$',),
+                deny=('\.\d+','news')
             ),
             follow=True
         ),
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)(\/\w+)*\.\d+'),
+                allow=('(politik|wirtschaft|panorama)(\/\w+)*.*\.\d+$'),
             ),
             callback='parse_page',
         ),

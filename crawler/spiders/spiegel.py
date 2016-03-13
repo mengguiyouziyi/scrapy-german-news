@@ -17,14 +17,17 @@ class SpiegelSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)\/.*\/',),
-                deny=('forum','\.html')
+                allow=(
+                    '(politik|wirtschaft|panorama|thema)\/.*\/$',
+                    'thema\/.+\.html$',
+                    ),
+                deny=('forum')
             ),
             follow=True
         ),
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)\/.+\.html'),
+                allow=('(politik|wirtschaft|panorama)\/.+\.html$'),
                 deny=('forum')
             ),
             callback='parse_page',

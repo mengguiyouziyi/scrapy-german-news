@@ -13,18 +13,21 @@ class WeltSpider(CrawlSpider):
     name = 'welt'
     rotate_user_agent = True
     allowed_domains = ['www.welt.de']
-    start_urls = ['http://www.welt.de']
+    start_urls = [
+        'http://www.welt.de',
+        'http://www.welt.de/themen'
+    ]
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)',),
+                allow=('(politik|wirtschaft|vermischtes|themen)',),
                 deny=('\.html')
             ),
             follow=True
         ),
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)(\/\w+)*\/article\d+\/.*\.html'),
+                allow=('(politik|wirtschafti|vermischtes)(\/\w+)*\/article\d+\/.*\.html'),
             ),
             callback='parse_page',
         ),

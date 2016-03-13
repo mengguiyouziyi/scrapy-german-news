@@ -17,7 +17,7 @@ class FocusSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)',),
+                allow=('(politik|wirtschaft|panorama)',),
                 deny=('\.html')
             ),
             follow=True

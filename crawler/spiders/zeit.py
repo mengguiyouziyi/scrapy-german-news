@@ -13,13 +13,16 @@ class ZeitSpider(CrawlSpider):
     name = 'zeit'
     rotate_user_agent = True
     allowed_domains = ['www.zeit.de']
-    start_urls = ['http://www.zeit.de/index']
+    start_urls = [
+        'http://www.zeit.de/index',
+        'http://www.zeit.de/suche/index',
+    ]
     rules = (
         Rule(
             LinkExtractor(
                 allow=(
-                    '(politik|gesellschaft|wirtschaft).*\/index',
-                    'thema\/'
+                    '(politik|gesellschaft|wirtschaft|suche).*\/index',
+                    'thema\/',
                 )
             ),
             follow=True
@@ -29,7 +32,6 @@ class ZeitSpider(CrawlSpider):
                 allow=('(politik|gesellschaft|wirtschaft)(\/.+)*\/\d{4}-\d{1,2}\/.+'),
                 deny=('-fs')
             ),
-            # Catch additional pages 
             callback='parse_page',
         ),
     )
@@ -44,6 +46,7 @@ class ZeitSpider(CrawlSpider):
         item['text'] = "".join([s.strip().encode('utf-8') for s in response.selector.css('.article__item').css('.paragraph').xpath('.//text()').extract()])
         item['author'] = [s.encode('utf-8') for s in response.selector.css('.byline').css('span[itemprop="name"]').xpath('./text()').extract()]
         item['keywords'] = [s.encode('utf-8') for s in response.selector.xpath('//meta[@name="keywords"]/@content').extract()]
+        # Handle next pages
         next_page = get_first(response.selector.xpath('//link[@rel="next"]/@href').extract())
         if next_page:
             self.logger.debug("Next page found: "+next_page)

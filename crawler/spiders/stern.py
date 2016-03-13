@@ -17,14 +17,17 @@ class SternSpider(CrawlSpider):
     rules = (
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)',),
-                deny=('\.html')
+                allow=(
+                    '(politik|wirtschaft|panorama|themen)\/$',
+                    'themen\/.+\.html$',
+                ),
             ),
             follow=True
         ),
         Rule(
             LinkExtractor(
-                allow=('(politik|wirtschaft)(\/\w+)*.*\.html'),
+                allow=('(politik|wirtschaft|panorama)(\/\w+)*.*\.html$'),
+                deny=('themen')
             ),
             callback='parse_page',
         ),
