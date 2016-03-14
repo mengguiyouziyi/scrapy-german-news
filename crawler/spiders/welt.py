@@ -10,6 +10,7 @@ from crawler.items import CrawlerItem
 from crawler.utils import get_first
 
 class WeltSpider(CrawlSpider):
+    """Spider for 'Die Welt'"""
     name = 'welt'
     rotate_user_agent = True
     allowed_domains = ['www.welt.de']
@@ -34,6 +35,7 @@ class WeltSpider(CrawlSpider):
     )
 
     def parse_page(self, response):
+        """Scrapes information from pages into items"""
         item = CrawlerItem()
         item['url'] = response.url.encode('utf-8')
         item['visited'] = datetime.datetime.now().isoformat().encode('utf-8')

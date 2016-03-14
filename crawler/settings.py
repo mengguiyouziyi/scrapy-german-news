@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Scrapy settings for crawler project
 #
 # For simplicity, this file contains only settings considered important or
@@ -13,7 +12,6 @@ BOT_NAME = 'crawler'
 
 SPIDER_MODULES = ['crawler.spiders']
 NEWSPIDER_MODULE = 'crawler.spiders'
-
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'crawler (+http://www.yourdomain.com)'
@@ -30,7 +28,7 @@ DOWNLOAD_DELAY=3
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable cookies (enabled by default)
-COOKIES_ENABLED=False
+# COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED=False
@@ -49,11 +47,12 @@ COOKIES_ENABLED=False
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-
 DOWNLOADER_MIDDLEWARES = {
-    'crawler.middlewares.RotateUserAgentMiddleware': 110,
+    # Enable for rotationg user agents
+    # 'crawler.middlewares.RotateUserAgentMiddleware': 110,
 }
 
+# User agents used for rotation (most common agents)
 USER_AGENT_CHOICES = [
     'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:41.0) Gecko/20100101 Firefox/41.0',
     'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36',
@@ -74,8 +73,8 @@ USER_AGENT_CHOICES = [
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'crawler.pipelines.PostgresPipeline': 300,
-    # 'crawler.pipelines.JsonWriterPipeline': 800,
+    # 'crawler.pipelines.PostgresPipeline': 300,
+    'crawler.pipelines.JsonWriterPipeline': 800,
 }
 
 DATABASE = {

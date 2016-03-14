@@ -10,6 +10,7 @@ from crawler.items import CrawlerItem
 from crawler.utils import get_first
 
 class SpiegelSpider(CrawlSpider):
+    """Spider for 'Spiegel Online'"""
     name = 'spiegel'
     rotate_user_agent = True
     allowed_domains = ['www.spiegel.de']
@@ -35,6 +36,7 @@ class SpiegelSpider(CrawlSpider):
     )
 
     def parse_page(self, response):
+        """Scrapes information from pages into items"""
         item = CrawlerItem()
         item['url'] = response.url.encode('utf-8')
         item['visited'] = datetime.datetime.now().isoformat().encode('utf-8')
