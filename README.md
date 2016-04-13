@@ -34,6 +34,7 @@ Following German news sites have spiders:
 * [Sueddeutsche Zeitung](http://www.sueddeutsche.de)
 * [Die Welt](http://www.welt.de)
 * [Zeit Online](http://www.zeit.de)
+* [n-tv](http://www.n-tv.de)
 
 Not the full sites are covered but only certain categories, see section [Categories](#categories) on how to modify them.
 
@@ -185,6 +186,7 @@ Stern | [http://www.stern.de](http://www.stern.de) | stern
 Sueddeutsche Zeitung | [http://www.sueddeutsche.de](http://www.sueddeutsche.de) | sz
 Die Welt | [http://www.welt.de](http://www.welt.de) | welt
 Zeit Online | [http://www.zeit.de](http://www.zeit.de) | zeit
+n-tv | [http://www.n-tv.de](http://www.n-tv.de) | ntv
 
 <a name="daemon"/>
 ### Daemon
