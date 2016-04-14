@@ -36,8 +36,9 @@ Following German news sites have spiders:
 * [Zeit Online](http://www.zeit.de)
 * [n-tv](http://www.n-tv.de)
 * [Handelsblatt](http://www.handelsblatt.com)
+* [RP Online](http://www.rp-online.de)
 
-Not the full sites are covered but only certain categories, see section [Categories](#categories) on how to modify them.
+Not the full sites are covered out of the box but only certain categories, see section [Categories](#categories) on how to modify them.
 
 <a name="retrieved_data"/>
 ### Retrieved Data
@@ -188,7 +189,8 @@ Sueddeutsche Zeitung | [http://www.sueddeutsche.de](http://www.sueddeutsche.de) 
 Die Welt | [http://www.welt.de](http://www.welt.de) | welt
 Zeit Online | [http://www.zeit.de](http://www.zeit.de) | zeit
 n-tv | [http://www.n-tv.de](http://www.n-tv.de) | ntv
-Handelsblatt | [http://www.handelsblatt.com](http://www.handelsblatt.com) | Handelsblatt
+Handelsblatt | [http://www.handelsblatt.com](http://www.handelsblatt.com) | hb
+RP Online | [http://ww.rp-online.de](http://www.rp-online.de) | rp
 
 <a name="daemon"/>
 ### Daemon
